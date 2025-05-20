@@ -1,5 +1,10 @@
+const buffer = new Map()
+
 chrome.webRequest.onCompleted.addListener(
     (details) => {
-        console.log(details.url)
+        chrome.tabs.sendMessage(details.tabId, {
+            type: "update-subtitles",
+            subtitles: details.url,
+        })
     },
     { urls: ["*://*/*.vtt"] });
