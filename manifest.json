@@ -10,6 +10,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "commands": {
+    "log-url": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Log subtitles url"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
