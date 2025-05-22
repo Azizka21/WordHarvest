@@ -8,9 +8,12 @@ chrome.runtime.onMessage.addListener(details => {
             .then(response => {
                 window.subtitles = response
             })
-        window.subtitles = details.subtitles
     }
     if (details.type === "log-url") {
+        const video = document.querySelector('video');
+        video.pause();
+        const time = video.currentTime;
+        console.log(time)
         console.log(window.subtitles)
     }
 })
