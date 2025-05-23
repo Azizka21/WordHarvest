@@ -8,7 +8,7 @@ chrome.webRequest.onCompleted.addListener(
     { urls: ["*://*/*.vtt"] });
 
 chrome.commands.onCommand.addListener(command => {
-    if (command === "log-url") {
+    if (command === "change-subtitles-block") {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const tabId = tabs[0].id;
             chrome.tabs.sendMessage(tabId, {type:"log-url"})

@@ -11,11 +11,11 @@
     "service_worker": "background.js"
   },
   "commands": {
-    "log-url": {
+    "change-subtitles-block": {
       "suggested_key": {
         "default": "Alt+Shift+S"
       },
-      "description": "Log subtitles url"
+      "description": "Change subtitles block"
     }
   },
   "content_scripts": [
