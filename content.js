@@ -24,7 +24,27 @@ chrome.runtime.onMessage.addListener(details => {
         video.pause();
         const time = video.currentTime;
         const currentSubtitleBlock = window.subtitles.find(block => time >= block.startS && time <= block.endS)
-        console.log(currentSubtitleBlock ? currentSubtitleBlock.text : "")
+
+        const subtitleDiv = document.createElement('div');
+        Object.assign(subtitleDiv.style, {
+            position: 'fixed',
+            bottom: '30px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            color: '#ffffff',
+            padding: '5px 10px',
+            borderRadius: '3px',
+            lineHeight: '1.9',
+            fontWeight: '400',
+            zIndex: '999999',
+            fontFamily: 'sans-serif',
+            boxDecorationBreak: 'clone',
+            WebkitBoxDecorationBreak: 'clone',
+            margin: '0'
+        });
+        subtitleDiv.innerHTML = currentSubtitleBlock.text
+        video.parentNode.appendChild(subtitleDiv);
     }
 })
 
