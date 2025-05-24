@@ -23,8 +23,13 @@ chrome.runtime.onMessage.addListener(details => {
         const video = document.querySelector('video');
         video.pause();
         const time = video.currentTime;
-        const currentSubtitleBlock = window.subtitles.find(block => time >= block.startS && time <= block.endS)
-
+        let currentSubtitleBlock
+        for (let block of window.subtitles) {
+            if (block.startS > time) {
+                break
+            }
+            currentSubtitleBlock = block
+        }
         const subtitleDiv = document.createElement('div');
         Object.assign(subtitleDiv.style, {
             position: 'fixed',
