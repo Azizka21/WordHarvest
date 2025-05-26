@@ -1,8 +1,13 @@
 chrome.webRequest.onCompleted.addListener(
-    (details) => {
+    async (details) => {
+        if (details.initiator && details.initiator.startsWith('chrome-extension://')) {
+            return;
+        }
+        const response = await fetch(details.url);
+        const text = await response.text();
         chrome.tabs.sendMessage(details.tabId, {
             type: "update-subtitles",
-            subtitles: details.url,
+            subtitles: text,
         })
     },
     { urls: ["*://*/*.vtt"] });
