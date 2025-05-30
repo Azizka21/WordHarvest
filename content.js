@@ -14,6 +14,9 @@ chrome.runtime.onMessage.addListener(details => {
                     const wordSpan = document.createElement('span')
                     wordSpan.textContent = word
                     content.appendChild(wordSpan)
+                    const space = document.createElement('p')
+                    space.innerHTML = ' '
+                    content.appendChild(space)
                 })
             })
             Object.assign(content.style, {
