@@ -7,8 +7,33 @@ chrome.runtime.onMessage.addListener(details => {
             const [start, end] = lines[0].split(' --> ');
             const startS = timeToSeconds(start)
             const endS = timeToSeconds(end)
-            const text = lines.slice(1).join('\n');
-            return { start, end, startS, endS, text };
+            const content = document.createElement('div')
+            lines.slice(1).forEach(line => {
+                const words = line.split(' ')
+                words.forEach(word => {
+                    const wordSpan = document.createElement('span')
+                    wordSpan.textContent = word
+                    content.appendChild(wordSpan)
+                })
+            })
+            Object.assign(content.style, {
+                position: 'fixed',
+                bottom: '30px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                color: '#ffffff',
+                padding: '5px 10px',
+                borderRadius: '3px',
+                lineHeight: '1.9',
+                fontWeight: '400',
+                zIndex: '999999',
+                fontFamily: 'sans-serif',
+                boxDecorationBreak: 'clone',
+                WebkitBoxDecorationBreak: 'clone',
+                margin: '0'
+            });
+            return { start, end, startS, endS, content };
         })
         window.subtitles = parsedSubtitles
     }
@@ -23,26 +48,7 @@ chrome.runtime.onMessage.addListener(details => {
             }
             currentSubtitleBlock = block
         }
-        const subtitleDiv = document.createElement('div');
-        Object.assign(subtitleDiv.style, {
-            position: 'fixed',
-            bottom: '30px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            color: '#ffffff',
-            padding: '5px 10px',
-            borderRadius: '3px',
-            lineHeight: '1.9',
-            fontWeight: '400',
-            zIndex: '999999',
-            fontFamily: 'sans-serif',
-            boxDecorationBreak: 'clone',
-            WebkitBoxDecorationBreak: 'clone',
-            margin: '0'
-        });
-        subtitleDiv.innerHTML = currentSubtitleBlock.text
-        video.parentNode.appendChild(subtitleDiv);
+        video.parentNode.appendChild(currentSubtitleBlock.content);
     }
 })
 
